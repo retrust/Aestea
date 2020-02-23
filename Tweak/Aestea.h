@@ -5,6 +5,9 @@
 // Utils
 HBPreferences* pfs;
 
+// Thanks to Nepeta for the DRM
+BOOL dpkgInvalid = NO;
+
 // Option Switches
 BOOL enabled = YES;
 
@@ -22,4 +25,8 @@ NSString* hotspotColorValue = @"#147efb";
 @interface CCUIRoundButton : UIControl
 @property(nonatomic, retain)UIView* selectedStateBackgroundView;
 - (id)_viewControllerForAncestor;
+@end
+
+@interface SBIconController : UIViewController
+- (void)viewDidAppear:(BOOL)animated;
 @end

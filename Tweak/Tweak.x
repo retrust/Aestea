@@ -1,6 +1,3 @@
-
-// Aestea is part of my Tweak Development Guide for beginners https://litten.sh/OwO/tweakDevelopmentForBeginners.pdf and was created with explanations for each line in the code
-
 #import "Aestea.h"
 
 %group Aestea
@@ -72,6 +69,36 @@
 
 %end
 
+    // This is an Alert if the Tweak is pirated (DRM)
+%group AesteaIntegrityFail
+
+%hook SBIconController
+
+- (void)viewDidAppear:(BOOL)animated {
+
+    %orig; //  Thanks to Nepeta for the DRM
+    if (!dpkgInvalid) return;
+		UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Aestea"
+		message:@"Seriously? Pirating a free Tweak is awful!\nPiracy repo's Tweaks could contain Malware if you didn't know that, so go ahead and get Aestea from the official Source https://repo.litten.sh/.\nIf you're seeing this but you got it from the official source then make sure to add https://repo.litten.sh to Cydia or Sileo."
+		preferredStyle:UIAlertControllerStyleAlert];
+
+		UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Aww man" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
+
+			UIApplication *application = [UIApplication sharedApplication];
+			[application openURL:[NSURL URLWithString:@"https://repo.litten.sh/"] options:@{} completionHandler:nil];
+
+	}];
+
+		[alertController addAction:cancelAction];
+
+		[self presentViewController:alertController animated:YES completion:nil];
+
+}
+
+%end
+
+%end
+
 %ctor {
 
     if (![NSProcessInfo processInfo]) return;
@@ -101,7 +128,16 @@
     }
 
     if (!shouldLoad) return;
+  
+    // Thanks To Nepeta For The DRM
+    dpkgInvalid = ![[NSFileManager defaultManager] fileExistsAtPath:@"/var/lib/dpkg/info/sh.litten.aestea.list"];
 
+    if (!dpkgInvalid) dpkgInvalid = ![[NSFileManager defaultManager] fileExistsAtPath:@"/var/lib/dpkg/info/sh.litten.aestea.md5sums"];
+
+    if (dpkgInvalid) {
+        %init(AesteaIntegrityFail);
+        return;
+    }
 
 	pfs = [[HBPreferences alloc] initWithIdentifier:@"sh.litten.aesteapreferences"];
 
@@ -114,9 +150,17 @@
 	[pfs registerObject:&airdropColorValue default:@"147efb" forKey:@"airdropColor"];
 	[pfs registerObject:&hotspotColorValue default:@"147efb" forKey:@"hotspotColor"];
 
-	if (enabled) {
-		%init(Aestea);
+	if (!dpkgInvalid && enabled) {
+        BOOL ok = false;
+        
+        ok = ([[NSFileManager defaultManager] fileExistsAtPath:[NSString stringWithFormat:@"/var/lib/dpkg/info/%@%@%@%@%@%@%@%@%@.aestea.md5sums", @"s", @"h", @".", @"l", @"i", @"t", @"t", @"e", @"n"]]
+        );
 
-	}
-
+        if (ok && [@"litten" isEqualToString:@"litten"]) {
+            %init(Aestea);
+            return;
+        } else {
+            dpkgInvalid = YES;
+        }
+    }
 }
