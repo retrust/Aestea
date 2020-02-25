@@ -4,33 +4,6 @@
 <dict>
 	<key>items</key>
 	<array>
-	
-		<dict>
-            <key>cell</key>
-            <string>PSButtonCell</string>
-            <key>label</key>
-            <string>@Litteeen</string>
-            <key>cellClass</key>
-            <string>HBTwitterCell</string>
-            <key>label</key>
-            <string>Litten</string>
-            <key>user</key>
-            <string>Litteeen</string>
-        </dict>
-		<dict>
-			<key>cell</key>
-			<string>PSSwitchCell</string>
-			<key>default</key>
-			<true/>
-			<key>defaults</key>
-			<string>sh.litten.aesteapreferences</string>
-			<key>key</key>
-			<string>Enabled</string>
-			<key>label</key>
-			<string>Enabled (Respring required)</string>
-			<key>PostNotification</key>
-			<string>sh.litten.aesteapreferences/ReloadPrefs</string>
-		</dict>
 
 		<dict>
 			<key>cell</key>
@@ -42,11 +15,11 @@
 			<key>cell</key>
 			<string>PSSwitchCell</string>
 			<key>default</key>
-			<true/>
+			<false/>
 			<key>defaults</key>
 			<string>sh.litten.aesteapreferences</string>
 			<key>key</key>
-			<string>colorOnState</string>
+			<string>colorOffState</string>
 			<key>label</key>
 			<string>Enable On State Coloring</string>
 			<key>PostNotification</key>
@@ -62,7 +35,7 @@
 				<key>defaults</key>
 				<string>sh.litten.aesteapreferences</string>
 				<key>key</key>
-				<string>airplaneColor</string>
+				<string>offAirplaneColor</string>
 				<key>fallback</key>
 				<string>#147efb</string>
 				<key>alpha</key>
@@ -71,7 +44,7 @@
 			<key>label</key>
 			<string>Airplane</string>
 			<key>key</key>
-			<string>airplaneColor</string>
+			<string>offAirplaneColor</string>
 			<key>PostNotification</key>
 			<string>sh.litten.aesteapreferences/ReloadPrefs</string>
 		</dict>
@@ -86,7 +59,7 @@
 				<key>defaults</key>
 				<string>sh.litten.aesteapreferences</string>
 				<key>key</key>
-				<string>cellularColor</string>
+				<string>offCellularColor</string>
 				<key>fallback</key>
 				<string>#147efb</string>
 				<key>alpha</key>
@@ -95,7 +68,7 @@
 			<key>label</key>
 			<string>Cellular</string>
 			<key>key</key>
-			<string>cellularColor</string>
+			<string>offCellularColor</string>
 			<key>PostNotification</key>
 			<string>sh.litten.aesteapreferences/ReloadPrefs</string>
 		</dict>
@@ -110,7 +83,7 @@
 				<key>defaults</key>
 				<string>sh.litten.aesteapreferences</string>
 				<key>key</key>
-				<string>wifiColor</string>
+				<string>offWifiColor</string>
 				<key>fallback</key>
 				<string>#147efb</string>
 				<key>alpha</key>
@@ -119,7 +92,7 @@
 			<key>label</key>
 			<string>Wifi</string>
 			<key>key</key>
-			<string>wifiColor</string>
+			<string>offWifiColor</string>
 			<key>PostNotification</key>
 			<string>sh.litten.aesteapreferences/ReloadPrefs</string>
 		</dict>
@@ -134,7 +107,7 @@
 				<key>defaults</key>
 				<string>sh.litten.aesteapreferences</string>
 				<key>key</key>
-				<string>bluetoothColor</string>
+				<string>offBluetoothColor</string>
 				<key>fallback</key>
 				<string>#147efb</string>
 				<key>alpha</key>
@@ -143,7 +116,7 @@
 			<key>label</key>
 			<string>Bluetooth</string>
 			<key>key</key>
-			<string>bluetoothColor</string>
+			<string>offBluetoothColor</string>
 			<key>PostNotification</key>
 			<string>sh.litten.aesteapreferences/ReloadPrefs</string>
 		</dict>
@@ -158,7 +131,7 @@
 				<key>defaults</key>
 				<string>sh.litten.aesteapreferences</string>
 				<key>key</key>
-				<string>airdropColor</string>
+				<string>offAirdropColor</string>
 				<key>fallback</key>
 				<string>#147efb</string>
 				<key>alpha</key>
@@ -167,7 +140,7 @@
 			<key>label</key>
 			<string>AirDrop</string>
 			<key>key</key>
-			<string>airdropColor</string>
+			<string>offAirdropColor</string>
 			<key>PostNotification</key>
 			<string>sh.litten.aesteapreferences/ReloadPrefs</string>
 		</dict>
@@ -182,7 +155,7 @@
 				<key>defaults</key>
 				<string>sh.litten.aesteapreferences</string>
 				<key>key</key>
-				<string>hotspotColor</string>
+				<string>offHotspotColor</string>
 				<key>fallback</key>
 				<string>#147efb</string>
 				<key>alpha</key>
@@ -191,102 +164,9 @@
 			<key>label</key>
 			<string>Hotspot</string>
 			<key>key</key>
-			<string>hotspotColor</string>
+			<string>offHotspotColor</string>
 			<key>PostNotification</key>
 			<string>sh.litten.aesteapreferences/ReloadPrefs</string>
-		</dict>
-
-		<dict>
-			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>label</key>
-			<string>Additional Settings</string>
-		</dict>
-		<dict>
- 			<key>cell</key>
- 			<string>PSLinkCell</string>
- 			<key>label</key>
- 			<string>Disabled State Colors</string>
- 			<key>detail</key>
- 			<string>AESSubPrefsListController</string>
- 			<key>AESSub</key>
- 			<string>disabledState</string>
- 		</dict>
-
-		<dict>
-			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>label</key>
-			<string>Icon Design</string>
-		</dict>
-		<dict>
-            <key>cell</key>
-            <string>PSButtonCell</string>
-            <key>label</key>
-            <string>@74k1_</string>
-            <key>cellClass</key>
-            <string>HBTwitterCell</string>
-            <key>label</key>
-            <string>taki</string>
-            <key>user</key>
-            <string>74k1_</string>
-        </dict>
-
-		<!-- Support Me -->
-		<dict>
-			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>label</key>
-			<string>Support Me</string>
-		</dict>
-		<dict>
-			<key>cellClass</key>
-			<string>HBLinkTableCell</string>
-			<key>label</key>
-			<string>Little Donation 🌺</string>
-			<key>subtitle</key>
-			<string>Helps Me To Pay For My Server</string>
-			<key>url</key>
-			<string>https://paypal.me/Litteeen</string>
-		</dict>
-		<dict>
-			<key>cellClass</key>
-			<string>HBLinkTableCell</string>
-			<key>label</key>
-			<string>Feature Request? ✨</string>
-			<key>subtitle</key>
-			<string>Send Me An Email With Your Request</string>
-			<key>url</key>
-			<string>mailto:hello@litten.sh?subject=Aestea%20Feature%20Request</string>
-		</dict>
-		<dict>
-			<key>cellClass</key>
-			<string>HBLinkTableCell</string>
-			<key>label</key>
-			<string>Source Code 🌙</string>
-			<key>subtitle</key>
-			<string>Github</string>
-			<key>url</key>
-			<string>https://github.com/Litteeen/Aestea</string>
-		</dict>
-		<dict>
-			<key>cellClass</key>
-			<string>HBLinkTableCell</string>
-			<key>label</key>
-			<string>Found A Bug? 🌧</string>
-			<key>subtitle</key>
-			<string>Leave A Bug Report Here</string>
-			<key>url</key>
-			<string>https://github.com/Litteeen/Aestea/issues/new</string>
-		</dict>
-
-		<dict>
-			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>footerText</key>
-			<string>Aestea By Litten, Made With ❤️</string>
-			<key>isStaticText</key>
-			<true/>
 		</dict>
 
 	</array>
