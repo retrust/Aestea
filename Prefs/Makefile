@@ -1,9 +1,9 @@
 ARCHS = arm64 arm64e
-TARGET = iphone:clang:11.2:11.2
+TARGET = iphone:clang::11.2
 
 include $(THEOS)/makefiles/common.mk
 
-BUNDLE_NAME = AESPrefs
+BUNDLE_NAME = AesteaPrefs
 $(BUNDLE_NAME)_FILES = $(wildcard *.m)
 $(BUNDLE_NAME)_INSTALL_PATH = /Library/PreferenceBundles
 $(BUNDLE_NAME)_FRAMEWORKS = UIKit

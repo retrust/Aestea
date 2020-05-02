@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>AESPrefs</string>
+	<string>AesteaPrefs</string>
 	<key>CFBundleIdentifier</key>
 	<string>sh.litten.aesteapreferences</string>
 	<key>CFBundleInfoDictionaryVersion</key>

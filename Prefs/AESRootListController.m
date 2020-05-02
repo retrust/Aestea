@@ -1,4 +1,9 @@
 #include "AESRootListController.h"
+#import <Cephei/HBRespringController.h>
+#import "../Tweak/Aestea.h"
+#import <spawn.h>
+
+BOOL enabled = NO;
 
 @implementation AESRootListController
 
@@ -8,25 +13,24 @@
     if (self) {
         AESAppearanceSettings *appearanceSettings = [[AESAppearanceSettings alloc] init];
         self.hb_appearanceSettings = appearanceSettings;
-        self.respringButton = [[UIBarButtonItem alloc] initWithTitle:@"ReSpring" 
-                                    style:UIBarButtonItemStylePlain
-                                    target:self 
-                                    action:@selector(respring)];
-        self.respringButton.tintColor = [UIColor whiteColor];
-        self.navigationItem.rightBarButtonItem = self.respringButton;
+        self.enableSwitch = [[UISwitch alloc] init];
+        self.enableSwitch.onTintColor = [UIColor colorWithRed:1.00 green:0.96 blue:0.64 alpha:1.0];
+        [self.enableSwitch addTarget:self action:@selector(toggleState) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem* switchy = [[UIBarButtonItem alloc] initWithCustomView: self.enableSwitch];
+        self.navigationItem.rightBarButtonItem = switchy;
 
         self.navigationItem.titleView = [UIView new];
         self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0,10,10)];
         self.titleLabel.font = [UIFont boldSystemFontOfSize:17];
         self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        self.titleLabel.text = @"Aestea";
+        self.titleLabel.text = @"1.1.4";
         self.titleLabel.textColor = [UIColor whiteColor];
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
         [self.navigationItem.titleView addSubview:self.titleLabel];
 
         self.iconView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,10,10)];
         self.iconView.contentMode = UIViewContentModeScaleAspectFit;
-        self.iconView.image = [UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/AESPrefs.bundle/icon@2x.png"];
+        self.iconView.image = [UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/AesteaPrefs.bundle/icon@2x.png"];
         self.iconView.translatesAutoresizingMaskIntoConstraints = NO;
         self.iconView.alpha = 0.0;
         [self.navigationItem.titleView addSubview:self.iconView];
@@ -60,7 +64,7 @@
     self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0,200,200)];
     self.headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,200,200)];
     self.headerImageView.contentMode = UIViewContentModeScaleAspectFill;
-    self.headerImageView.image = [UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/AESPrefs.bundle/Banner.png"];
+    self.headerImageView.image = [UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/AesteaPrefs.bundle/Banner.png"];
     self.headerImageView.translatesAutoresizingMaskIntoConstraints = NO;
 
     [self.headerView addSubview:self.headerImageView];
@@ -96,6 +100,8 @@
 
     [self.navigationController.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
 
+    [self setEnableSwitchState];
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -123,26 +129,88 @@
     self.headerImageView.frame = CGRectMake(0, offsetY, self.headerView.frame.size.width, 200 - offsetY);
 }
 
--(void)respring {
-	UIAlertController *respring = [UIAlertController alertControllerWithTitle:@"Aestea"
-													 message:@"Do you really want to ReSpring?"
-													 preferredStyle:UIAlertControllerStyleAlert];
-	UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
-			[self respringUtil];
-	}];
+- (void)toggleState {
 
-	UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
-	[respring addAction:confirmAction];
-	[respring addAction:cancelAction];
-	[self presentViewController:respring animated:YES completion:nil];
+    self.enableSwitch.enabled = NO;
+
+    HBPreferences *pfs = [[HBPreferences alloc] initWithIdentifier: @"sh.litten.aesteapreferences"];
+    
+    if ([[pfs objectForKey:@"Enabled"] isEqual: @(NO)]) {
+        enabled = YES;
+        [pfs setBool:enabled forKey: @"Enabled"];
+        [self respringUtil];
+        
+    } else if ([[pfs objectForKey:@"Enabled"] isEqual: @(YES)]) {
+        enabled = NO;
+        [pfs setBool:enabled forKey: @"Enabled"];
+        [self respringUtil];
+
+    }
 
 }
 
--(void)respringUtil {
-	NSTask *t = [[NSTask alloc] init];
-    [t setLaunchPath:@"/usr/bin/killall"];
-    [t setArguments:[NSArray arrayWithObjects:@"backboardd", nil]];
-    [t launch];
+- (void)setEnableSwitchState {
+
+    NSString* path = [NSString stringWithFormat:@"/var/mobile/Library/Preferences/sh.litten.aesteapreferences.plist"];
+    NSMutableDictionary* dictionary = [NSMutableDictionary dictionaryWithContentsOfFile:path];
+    NSSet* allKeys = [NSSet setWithArray:[dictionary allKeys]];
+    
+    if (!([allKeys containsObject:@"Enabled"])) {
+        [self.enableSwitch setOn:NO animated: YES];
+
+    } else if ([[dictionary objectForKey:@"Enabled"] isEqual: @(YES)]) {
+        [self.enableSwitch setOn:YES animated: YES];
+
+    } else if ([[dictionary objectForKey:@"Enabled"] isEqual: @(NO)]) {
+        [self.enableSwitch setOn:NO animated: YES];
+        
+    }
+
+}
+
+- (void)resetPrompt {
+
+    UIAlertController *resetAlert = [UIAlertController alertControllerWithTitle:@"Aestea"
+	message:@"Do You Really Want To Reset Your Preferences?"
+	preferredStyle:UIAlertControllerStyleActionSheet];
+	
+    UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"Yep" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
+			
+        [self resetPreferences];
+
+	}];
+
+	UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Nope" style:UIAlertActionStyleCancel handler:nil];
+
+	[resetAlert addAction:confirmAction];
+	[resetAlert addAction:cancelAction];
+
+	[self presentViewController:resetAlert animated:YES completion:nil];
+
+}
+
+- (void)resetPreferences {
+
+    HBPreferences *pfs = [[HBPreferences alloc] initWithIdentifier: @"sh.litten.aesteapreferences"];
+    for (NSString *key in [pfs dictionaryRepresentation]) {
+        [pfs removeObjectForKey:key];
+
+    }
+    
+    [self.enableSwitch setOn:NO animated: YES];
+    [self respringUtil];
+
+}
+
+- (void)respringUtil {
+
+    pid_t pid;
+    const char *args[] = {"killall", "backboardd", NULL};
+
+    [HBRespringController respringAndReturnTo:[NSURL URLWithString:@"prefs:root=Aestea"]];
+
+    posix_spawn(&pid, "/usr/bin/killall", NULL, NULL, (char *const *)args, NULL);
+
 }
 
 @end

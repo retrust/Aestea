@@ -1,5 +1,7 @@
 #import "Aestea.h"
 
+BOOL enabled;
+
 %group Aestea
 
 %hook CCUIRoundButton
