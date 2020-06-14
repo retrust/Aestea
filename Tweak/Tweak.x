@@ -13,7 +13,6 @@ BOOL enabled;
 	if (enabled) {
 		ancestor = [self _viewControllerForAncestor];
 		NSDictionary* preferencesDictionary = [NSDictionary dictionaryWithContentsOfFile: @"/var/mobile/Library/Preferences/sh.litten.aesteapreferences.plist"];
-		
 		if (colorOnStateSwitch) {
 			colorAirplaneString = [preferencesDictionary objectForKey: @"airplaneColor"];
 			colorAirplane = [SparkColourPickerUtils colourWithString: colorAirplaneString withFallback: @"#147efb"];
@@ -26,8 +25,7 @@ BOOL enabled;
 			colorAirdropString = [preferencesDictionary objectForKey: @"airdropColor"];
 			colorAirDrop = [SparkColourPickerUtils colourWithString: colorAirdropString withFallback: @"#147efb"];
 			colorHoptspotString = [preferencesDictionary objectForKey: @"hotspotColor"];
-			colorHotspot = [SparkColourPickerUtils colourWithString: colorHoptspotString withFallback: @"#147efb"];
-			
+			colorHotspot = [SparkColourPickerUtils colourWithString: colorHoptspotString withFallback: @"#147efb"];	
 		}
 
 		if (colorOffStateSwitch) {
@@ -43,87 +41,61 @@ BOOL enabled;
 			offColorAirDrop = [SparkColourPickerUtils colourWithString: offColorAirdropString withFallback: @"#147efb"];
 			offColorHoptspotString = [preferencesDictionary objectForKey: @"offHotspotColor"];
 			offColorHotspot = [SparkColourPickerUtils colourWithString: offColorHoptspotString withFallback: @"#147efb"];
-
 		}
 
 		if ([ancestor isKindOfClass: %c(CCUIConnectivityAirplaneViewController)]) {
 			if (colorOnStateSwitch) {
-				self.selectedStateBackgroundView.backgroundColor = colorAirplane;
-
+				[[self selectedStateBackgroundView] setBackgroundColor:colorAirplane];
 			}
-
 			if (colorOffStateSwitch) {
-				self.normalStateBackgroundView.backgroundColor = offColorAirplane;
-
+				[[self normalStateBackgroundView] setBackgroundColor:offColorAirplane];
 			}
-
 		}
 
 		if ([ancestor isKindOfClass: %c(CCUIConnectivityCellularDataViewController)]) {
 			if (colorOnStateSwitch) {
-				self.selectedStateBackgroundView.backgroundColor = colorCellular;
-
+				[[self selectedStateBackgroundView] setBackgroundColor:colorCellular];
 			}
-
 			if (colorOffStateSwitch) {
-				self.normalStateBackgroundView.backgroundColor = offColorCellular;
-
+				[[self normalStateBackgroundView] setBackgroundColor:offColorCellular];
 			}
-
 		}
 
 		if ([ancestor isKindOfClass: %c(CCUIConnectivityWifiViewController)]) {
 			if (colorOnStateSwitch) {
-				self.selectedStateBackgroundView.backgroundColor = colorWifi;
-
+				[[self selectedStateBackgroundView] setBackgroundColor:colorWifi];
 			}
-
 			if (colorOffStateSwitch) {
-				self.normalStateBackgroundView.backgroundColor = offColorWifi;
-
+				[[self normalStateBackgroundView] setBackgroundColor:offColorWifi];
 			}
-
 		}
 
 		if ([ancestor isKindOfClass: %c(CCUIConnectivityBluetoothViewController)]) {
 			if (colorOnStateSwitch) {
-				self.selectedStateBackgroundView.backgroundColor = colorBluetooth;
-
+				[[self selectedStateBackgroundView] setBackgroundColor:colorBluetooth];
 			}
-
 			if (colorOffStateSwitch) {
-				self.normalStateBackgroundView.backgroundColor = offColorBluetooth;
-
+				[[self normalStateBackgroundView] setBackgroundColor:offColorBluetooth];
 			}
-
 		}
 
 		if ([ancestor isKindOfClass: %c(CCUIConnectivityAirDropViewController)]) {
 			if (colorOnStateSwitch) {
-				self.selectedStateBackgroundView.backgroundColor = colorAirDrop;
-
+				[[self selectedStateBackgroundView] setBackgroundColor:colorAirDrop];
 			}
-
 			if (colorOffStateSwitch) {
-				self.normalStateBackgroundView.backgroundColor = offColorAirDrop;
-
+				[[self normalStateBackgroundView] setBackgroundColor:offColorAirDrop];
 			}
-
 		}
 
 		if ([ancestor isKindOfClass: %c(CCUIConnectivityHotspotViewController)]) {
 			if (colorOnStateSwitch) {
-				self.selectedStateBackgroundView.backgroundColor = colorHotspot;
-
+				[[self selectedStateBackgroundView] setBackgroundColor:colorHotspot];
 			}
-
 			if (colorOffStateSwitch) {
-				self.normalStateBackgroundView.backgroundColor = offColorHotspot;
-
+				[[self normalStateBackgroundView] setBackgroundColor:offColorHotspot];
 			}
-
 		}
-
 	}
 
 }
@@ -131,23 +103,24 @@ BOOL enabled;
 %end
 
 %end
-    // This is an Alert if the Tweak is pirated (DRM)
+
 %group AesteaIntegrityFail
 
 %hook SBIconController
 
 - (void)viewDidAppear:(BOOL)animated {
 
-    %orig; //  Thanks to Nepeta for the DRM
+    %orig;
+
     if (!dpkgInvalid) return;
 		UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Aestea"
-		message:@"Seriously? Pirating a free Tweak is awful!\nPiracy repo's Tweaks could contain Malware if you didn't know that, so go ahead and get Aestea from the official Source https://repo.litten.sh/.\nIf you're seeing this but you got it from the official source then make sure to add https://repo.litten.sh to Cydia or Sileo."
+		message:@"Seriously? Pirating a free Tweak is awful!\nPiracy repo's Tweaks could contain Malware if you didn't know that, so go ahead and get Aestea from the official Source https://repo.litten.love/.\nIf you're seeing this but you got it from the official source then make sure to add https://repo.litten.love to Cydia or Sileo."
 		preferredStyle:UIAlertControllerStyleAlert];
 
-		UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Aww man" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
+		UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Okey" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
 
 			UIApplication *application = [UIApplication sharedApplication];
-			[application openURL:[NSURL URLWithString:@"https://repo.litten.sh/"] options:@{} completionHandler:nil];
+			[application openURL:[NSURL URLWithString:@"https://repo.litten.love/"] options:@{} completionHandler:nil];
 
 	}];
 
@@ -162,37 +135,7 @@ BOOL enabled;
 %end
 
 %ctor {
-
-	// This code avoid respring loops, only needed if you hook a system process like UIKit or Foundation system wide (in the plist file), also only if you use cephei
-    if (![NSProcessInfo processInfo]) return;
-    NSString *processName = [NSProcessInfo processInfo].processName;
-    bool isSpringboard = [@"SpringBoard" isEqualToString:processName];
-
-    // Someone smarter than Nepeta invented this.
-    // https://www.reddit.com/r/jailbreak/comments/4yz5v5/questionremote_messages_not_enabling/d6rlh88/
-    bool shouldLoad = NO;
-    NSArray *args = [[NSClassFromString(@"NSProcessInfo") processInfo] arguments];
-    NSUInteger count = args.count;
-    if (count != 0) {
-        NSString *executablePath = args[0];
-        if (executablePath) {
-            NSString *processName = [executablePath lastPathComponent];
-            BOOL isApplication = [executablePath rangeOfString:@"/Application/"].location != NSNotFound || [executablePath rangeOfString:@"/Applications/"].location != NSNotFound;
-            BOOL isFileProvider = [[processName lowercaseString] rangeOfString:@"fileprovider"].location != NSNotFound;
-            BOOL skip = [processName isEqualToString:@"AdSheet"]
-                        || [processName isEqualToString:@"CoreAuthUI"]
-                        || [processName isEqualToString:@"InCallService"]
-                        || [processName isEqualToString:@"MessagesNotificationViewService"]
-                        || [executablePath rangeOfString:@".appex/"].location != NSNotFound;
-            if ((!isFileProvider && isApplication && !skip) || isSpringboard) {
-                shouldLoad = YES;
-            }
-        }
-    }
-
-    if (!shouldLoad) return;
   
-    // Thanks To Nepeta For The DRM
     dpkgInvalid = ![[NSFileManager defaultManager] fileExistsAtPath:@"/var/lib/dpkg/info/sh.litten.aestea.list"];
 
     if (!dpkgInvalid) dpkgInvalid = ![[NSFileManager defaultManager] fileExistsAtPath:@"/var/lib/dpkg/info/sh.litten.aestea.md5sums"];
@@ -209,6 +152,7 @@ BOOL enabled;
 	[pfs registerBool:&colorOnStateSwitch default:YES forKey:@"colorOnState"];
 	[pfs registerBool:&colorOffStateSwitch default:NO forKey:@"colorOffState"];
 
+	// Toggle On Color
 	[pfs registerObject:&airplaneColorValue default:@"147efb" forKey:@"airplaneColor"];
 	[pfs registerObject:&cellularColorValue default:@"147efb" forKey:@"cellularColor"];
 	[pfs registerObject:&wifiColorValue default:@"147efb" forKey:@"wifiColor"];
@@ -216,6 +160,7 @@ BOOL enabled;
 	[pfs registerObject:&airdropColorValue default:@"147efb" forKey:@"airdropColor"];
 	[pfs registerObject:&hotspotColorValue default:@"147efb" forKey:@"hotspotColor"];
 
+	// Toggle Off Color
 	[pfs registerObject:&airplaneOffColorValue default:@"147efb" forKey:@"offAirplaneColor"];
 	[pfs registerObject:&cellularOffColorValue default:@"147efb" forKey:@"offCellularColor"];
 	[pfs registerObject:&wifiOffColorValue default:@"147efb" forKey:@"offWifiColor"];

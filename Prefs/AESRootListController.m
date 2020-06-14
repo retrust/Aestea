@@ -8,6 +8,7 @@ BOOL enabled = NO;
 @implementation AESRootListController
 
 - (instancetype)init {
+
     self = [super init];
 
     if (self) {
@@ -23,7 +24,7 @@ BOOL enabled = NO;
         self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0,10,10)];
         self.titleLabel.font = [UIFont boldSystemFontOfSize:17];
         self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        self.titleLabel.text = @"1.1.4";
+        self.titleLabel.text = @"1.1.5";
         self.titleLabel.textColor = [UIColor whiteColor];
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
         [self.navigationItem.titleView addSubview:self.titleLabel];
@@ -46,19 +47,21 @@ BOOL enabled = NO;
             [self.iconView.bottomAnchor constraintEqualToAnchor:self.navigationItem.titleView.bottomAnchor],
         ]];
     }
-
     return self;
 }
 
 -(NSArray *)specifiers {
+
 	if (_specifiers == nil) {
 		_specifiers = [[self loadSpecifiersFromPlistName:@"Root" target:self] retain];
 	}
 
 	return _specifiers;
+
 }
 
 - (void)viewDidLoad {
+
     [super viewDidLoad];
 
     self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0,200,200)];
@@ -66,6 +69,7 @@ BOOL enabled = NO;
     self.headerImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.headerImageView.image = [UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/AesteaPrefs.bundle/Banner.png"];
     self.headerImageView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.headerImageView.clipsToBounds = YES;
 
     [self.headerView addSubview:self.headerImageView];
     [NSLayoutConstraint activateConstraints:@[
@@ -76,14 +80,18 @@ BOOL enabled = NO;
     ]];
 
     _table.tableHeaderView = self.headerView;
+
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+
     tableView.tableHeaderView = self.headerView;
     return [super tableView:tableView cellForRowAtIndexPath:indexPath];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+
     [super viewWillAppear:animated];
 
     CGRect frame = self.table.bounds;
@@ -93,9 +101,11 @@ BOOL enabled = NO;
     [self.navigationController.navigationController.navigationBar setShadowImage: [UIImage new]];
     self.navigationController.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationController.navigationBar.translucent = NO;
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+
     [super viewDidAppear:animated];
 
     [self.navigationController.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
@@ -105,12 +115,15 @@ BOOL enabled = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+
     [super viewWillDisappear:animated];
 
     [self.navigationController.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
+
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+
     CGFloat offsetY = scrollView.contentOffset.y;
 
     if (offsetY > 200) {
@@ -127,24 +140,34 @@ BOOL enabled = NO;
     
     if (offsetY > 0) offsetY = 0;
     self.headerImageView.frame = CGRectMake(0, offsetY, self.headerView.frame.size.width, 200 - offsetY);
+
 }
 
 - (void)toggleState {
 
-    self.enableSwitch.enabled = NO;
+    [[self enableSwitch] setEnabled:NO];
 
-    HBPreferences *pfs = [[HBPreferences alloc] initWithIdentifier: @"sh.litten.aesteapreferences"];
+    NSString* path = [NSString stringWithFormat:@"/var/mobile/Library/Preferences/sh.litten.aesteapreferences.plist"];
+    NSMutableDictionary* dictionary = [NSMutableDictionary dictionaryWithContentsOfFile:path];
+    NSSet* allKeys = [NSSet setWithArray:[dictionary allKeys]];
+    HBPreferences *preferences = [[HBPreferences alloc] initWithIdentifier: @"sh.litten.aesteapreferences"];
     
-    if ([[pfs objectForKey:@"Enabled"] isEqual: @(NO)]) {
+    if (!([[NSFileManager defaultManager] fileExistsAtPath:@"/var/mobile/Library/Preferences/sh.litten.aesteapreferences.plist"])) {
         enabled = YES;
-        [pfs setBool:enabled forKey: @"Enabled"];
+        [preferences setBool:enabled forKey:@"Enabled"];
         [self respringUtil];
-        
-    } else if ([[pfs objectForKey:@"Enabled"] isEqual: @(YES)]) {
+    } else if (!([allKeys containsObject:@"Enabled"])) {
+        enabled = YES;
+        [preferences setBool:enabled forKey:@"Enabled"];
+        [self respringUtil];
+    } else if ([[preferences objectForKey:@"Enabled"] isEqual:@(NO)]) {
+        enabled = YES;
+        [preferences setBool:enabled forKey:@"Enabled"];
+        [self respringUtil];
+    } else if ([[preferences objectForKey:@"Enabled"] isEqual:@(YES)]) {
         enabled = NO;
-        [pfs setBool:enabled forKey: @"Enabled"];
+        [preferences setBool:enabled forKey:@"Enabled"];
         [self respringUtil];
-
     }
 
 }
@@ -154,17 +177,16 @@ BOOL enabled = NO;
     NSString* path = [NSString stringWithFormat:@"/var/mobile/Library/Preferences/sh.litten.aesteapreferences.plist"];
     NSMutableDictionary* dictionary = [NSMutableDictionary dictionaryWithContentsOfFile:path];
     NSSet* allKeys = [NSSet setWithArray:[dictionary allKeys]];
+    HBPreferences* preferences = [[HBPreferences alloc] initWithIdentifier: @"sh.litten.aesteapreferences"];
     
-    if (!([allKeys containsObject:@"Enabled"])) {
-        [self.enableSwitch setOn:NO animated: YES];
-
-    } else if ([[dictionary objectForKey:@"Enabled"] isEqual: @(YES)]) {
-        [self.enableSwitch setOn:YES animated: YES];
-
-    } else if ([[dictionary objectForKey:@"Enabled"] isEqual: @(NO)]) {
-        [self.enableSwitch setOn:NO animated: YES];
-        
-    }
+    if (!([[NSFileManager defaultManager] fileExistsAtPath:@"/var/mobile/Library/Preferences/sh.litten.aesteapreferences.plist"]))
+        [[self enableSwitch] setOn:NO animated:YES];
+    else if (!([allKeys containsObject:@"Enabled"]))
+        [[self enableSwitch] setOn:NO animated:YES];
+    else if ([[preferences objectForKey:@"Enabled"] isEqual:@(YES)])
+        [[self enableSwitch] setOn:YES animated:YES];
+    else if ([[preferences objectForKey:@"Enabled"] isEqual:@(NO)])
+        [[self enableSwitch] setOn:NO animated:YES];
 
 }
 
@@ -194,7 +216,6 @@ BOOL enabled = NO;
     HBPreferences *pfs = [[HBPreferences alloc] initWithIdentifier: @"sh.litten.aesteapreferences"];
     for (NSString *key in [pfs dictionaryRepresentation]) {
         [pfs removeObjectForKey:key];
-
     }
     
     [self.enableSwitch setOn:NO animated: YES];

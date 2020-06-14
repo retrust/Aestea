@@ -9,7 +9,7 @@
 			<key>cellClass</key>
 			<string>DuoTwitterCell</string>
 			<key>firstLabel</key>
-			<string>Litten</string>
+			<string>🌸 Litten</string>
 			<key>firstAccount</key>
 			<string>Litteeen</string>
 			<key>secondLabel</key>
@@ -24,7 +24,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>Toggle Colors</string>
+			<string>Enabled Toggle Colors</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -188,18 +188,165 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>Additional Settings</string>
+			<string>Disabled Toggle Colors</string>
 		</dict>
 		<dict>
- 			<key>cell</key>
- 			<string>PSLinkCell</string>
- 			<key>label</key>
- 			<string>Disabled State Colors</string>
- 			<key>detail</key>
- 			<string>AESSubPrefsListController</string>
- 			<key>AESSub</key>
- 			<string>disabledState</string>
- 		</dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>sh.litten.aesteapreferences</string>
+			<key>key</key>
+			<string>colorOffState</string>
+			<key>label</key>
+			<string>Enable On State Coloring</string>
+			<key>PostNotification</key>
+			<string>sh.litten.aesteapreferences/ReloadPrefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSLinkCell</string>
+			<key>cellClass</key>
+			<string>SparkColourPickerCell</string>
+			<key>libsparkcolourpicker</key>
+			<dict>
+				<key>defaults</key>
+				<string>sh.litten.aesteapreferences</string>
+				<key>key</key>
+				<string>offAirplaneColor</string>
+				<key>fallback</key>
+				<string>#147efb</string>
+				<key>alpha</key>
+				<false/>
+			</dict>
+			<key>label</key>
+			<string>Airplane</string>
+			<key>key</key>
+			<string>offAirplaneColor</string>
+			<key>PostNotification</key>
+			<string>sh.litten.aesteapreferences/ReloadPrefs</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSLinkCell</string>
+			<key>cellClass</key>
+			<string>SparkColourPickerCell</string>
+			<key>libsparkcolourpicker</key>
+			<dict>
+				<key>defaults</key>
+				<string>sh.litten.aesteapreferences</string>
+				<key>key</key>
+				<string>offCellularColor</string>
+				<key>fallback</key>
+				<string>#147efb</string>
+				<key>alpha</key>
+				<false/>
+			</dict>
+			<key>label</key>
+			<string>Cellular</string>
+			<key>key</key>
+			<string>offCellularColor</string>
+			<key>PostNotification</key>
+			<string>sh.litten.aesteapreferences/ReloadPrefs</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSLinkCell</string>
+			<key>cellClass</key>
+			<string>SparkColourPickerCell</string>
+			<key>libsparkcolourpicker</key>
+			<dict>
+				<key>defaults</key>
+				<string>sh.litten.aesteapreferences</string>
+				<key>key</key>
+				<string>offWifiColor</string>
+				<key>fallback</key>
+				<string>#147efb</string>
+				<key>alpha</key>
+				<false/>
+			</dict>
+			<key>label</key>
+			<string>Wifi</string>
+			<key>key</key>
+			<string>offWifiColor</string>
+			<key>PostNotification</key>
+			<string>sh.litten.aesteapreferences/ReloadPrefs</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSLinkCell</string>
+			<key>cellClass</key>
+			<string>SparkColourPickerCell</string>
+			<key>libsparkcolourpicker</key>
+			<dict>
+				<key>defaults</key>
+				<string>sh.litten.aesteapreferences</string>
+				<key>key</key>
+				<string>offBluetoothColor</string>
+				<key>fallback</key>
+				<string>#147efb</string>
+				<key>alpha</key>
+				<false/>
+			</dict>
+			<key>label</key>
+			<string>Bluetooth</string>
+			<key>key</key>
+			<string>offBluetoothColor</string>
+			<key>PostNotification</key>
+			<string>sh.litten.aesteapreferences/ReloadPrefs</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSLinkCell</string>
+			<key>cellClass</key>
+			<string>SparkColourPickerCell</string>
+			<key>libsparkcolourpicker</key>
+			<dict>
+				<key>defaults</key>
+				<string>sh.litten.aesteapreferences</string>
+				<key>key</key>
+				<string>offAirdropColor</string>
+				<key>fallback</key>
+				<string>#147efb</string>
+				<key>alpha</key>
+				<false/>
+			</dict>
+			<key>label</key>
+			<string>AirDrop</string>
+			<key>key</key>
+			<string>offAirdropColor</string>
+			<key>PostNotification</key>
+			<string>sh.litten.aesteapreferences/ReloadPrefs</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSLinkCell</string>
+			<key>cellClass</key>
+			<string>SparkColourPickerCell</string>
+			<key>libsparkcolourpicker</key>
+			<dict>
+				<key>defaults</key>
+				<string>sh.litten.aesteapreferences</string>
+				<key>key</key>
+				<string>offHotspotColor</string>
+				<key>fallback</key>
+				<string>#147efb</string>
+				<key>alpha</key>
+				<false/>
+			</dict>
+			<key>label</key>
+			<string>Hotspot</string>
+			<key>key</key>
+			<string>offHotspotColor</string>
+			<key>PostNotification</key>
+			<string>sh.litten.aesteapreferences/ReloadPrefs</string>
+		</dict>
 
 		<dict>
 			<key>cell</key>
@@ -233,13 +380,17 @@
 			<true/>
 		</dict>
 		<dict>
-			<key>cellClass</key>
-			<string>KRTwitterCell</string>
-			<key>label</key>
-			<string>Kritanta</string>
-			<key>accountName</key>
-			<string>_kritanta</string>
-		</dict>
+            <key>cell</key>
+            <string>PSButtonCell</string>
+            <key>label</key>
+            <string>@_kritanta</string>
+            <key>cellClass</key>
+            <string>HBTwitterCell</string>
+            <key>label</key>
+            <string>kritanta</string>
+            <key>user</key>
+            <string>_kritanta</string>
+        </dict>
 
 		<dict>
 			<key>cell</key>
@@ -251,13 +402,13 @@
 			<key>cellClass</key>
 			<string>HBLinkTableCell</string>
 			<key>label</key>
-			<string>Rose</string>
+			<string>Dress</string>
 			<key>subtitle</key>
-			<string>System Wide Haptics, Great uh-huh</string>
+			<string>Dress Up Your Lockscreen</string>
 			<key>icon</key>
-			<string>Rose.png</string>
+			<string>Dress.png</string>
 			<key>url</key>
-			<string>https://repo.litten.love/depictions/rse/</string>
+			<string>https://repo.litten.love/depictions/drs/</string>
 		</dict>
 		<dict>
 			<key>cellClass</key>
@@ -275,21 +426,18 @@
 			<key>cellClass</key>
 			<string>HBLinkTableCell</string>
 			<key>label</key>
-			<string>Butterfly</string>
+			<string>Rose</string>
 			<key>subtitle</key>
-			<string>Text Selection, But Colorful</string>
+			<string>System Wide Haptics, Great uh-huh</string>
 			<key>icon</key>
-			<string>Butterfly.png</string>
+			<string>Rose.png</string>
 			<key>url</key>
-			<string>https://repo.litten.love/depictions/bty/</string>
+			<string>https://repo.litten.love/depictions/rse/</string>
 		</dict>
 
-		<!-- Support Me -->
-		<dict>
+				<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
-			<key>label</key>
-			<string>Support Me</string>
 			<key>footerText</key>
 			<string>Aestea By Litten
 Artworks By taki</string>
@@ -300,9 +448,9 @@ Artworks By taki</string>
 			<key>cellClass</key>
 			<string>HBLinkTableCell</string>
 			<key>label</key>
-			<string>Little Donation 🌺</string>
+			<string>Donate To Litten</string>
 			<key>subtitle</key>
-			<string>Helps Me To Pay For My Server</string>
+			<string>Appreciated 💝</string>
 			<key>url</key>
 			<string>https://paypal.me/Litteeen</string>
 		</dict>
@@ -310,38 +458,18 @@ Artworks By taki</string>
 			<key>cellClass</key>
 			<string>HBLinkTableCell</string>
 			<key>label</key>
-			<string>Feature Request? ✨</string>
+			<string>Source Code</string>
 			<key>subtitle</key>
-			<string>Send Me An Email With Your Request</string>
-			<key>url</key>
-			<string>https://litten.love/report.html</string>
-		</dict>
-		<dict>
-			<key>cellClass</key>
-			<string>HBLinkTableCell</string>
-			<key>label</key>
-			<string>Source Code 🌙</string>
-			<key>subtitle</key>
-			<string>Github</string>
+			<string>GitHub 🌊</string>
 			<key>url</key>
 			<string>https://github.com/Litteeen/Aestea</string>
-		</dict>
-		<dict>
-			<key>cellClass</key>
-			<string>HBLinkTableCell</string>
-			<key>label</key>
-			<string>Found A Bug? 🌧</string>
-			<key>subtitle</key>
-			<string>Leave A Bug Report Here</string>
-			<key>url</key>
-			<string>https://litten.love/report.html</string>
 		</dict>
 
 		<dict>
 			<key>cell</key>
 			<key>PSGroupCell</key>
 			<key>footerText</key>
-			<string>Made With 💙</string>
+			<string>Made With 💜</string>
 			<key>isStaticText</key>
 			<true/>
 			<key>footerAlignment</key>
